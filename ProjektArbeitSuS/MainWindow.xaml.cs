@@ -36,6 +36,7 @@ namespace ProjektArbeitSuS
                 Key = key;
                 Label_Martikelnummer.Content = "Martik "+Convert.ToString(Key);
                 MessageBox.Show(Convert.ToString(Key));
+                Window_Connector.Key = Key;
                 MainFrame.Content = Window_Connector;
                 
                 return true;
