@@ -61,7 +61,7 @@ namespace ProjektArbeitSuS.Windows.Login
                 {
                     if (TextBox_Key.Text.Length > 10)
                     {
-                        TextBox_Key.Text = TextBox_Key.Text.Substring(0, 10);
+                        TextBox_Key.Text = TextBox_Key.Text.Substring(0, 9);
                         Label_Error.Content = "Max 10 zahlen";
                     }
                     else

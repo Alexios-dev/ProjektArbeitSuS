@@ -60,6 +60,11 @@ namespace ProjektArbeitSuS.Windows.Controller
             Label_Help.Content = "";
         }
         //----------------------------------------------------------------------------------------------------
+        private void Button_Auswahl1_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Content = new Windows.Schüler.SiteSchülerAuswahl1(Label_Help);
+
+        }
         private void Button_Auswahl2_MouseMove(object sender, MouseEventArgs e)
         {
             if (Convert.ToString(Key).Substring(0, 1) == "1")
@@ -101,11 +106,13 @@ namespace ProjektArbeitSuS.Windows.Controller
             {
                 Help = true;
                 Label_Help.Content = null;
+                Label_Help.Visibility = Visibility.Visible;
             }
             else
             {
                 Help = false;
                 Label_Help.Content = null;
+                Label_Help.Visibility=Visibility.Hidden;
             }
         }
         //----------------------------------------------------------------------------------------------------

@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Folder Include="Windows\Lehrer\" />
-    <Folder Include="Windows\Schüler\" />
   </ItemGroup>
 
 </Project>
