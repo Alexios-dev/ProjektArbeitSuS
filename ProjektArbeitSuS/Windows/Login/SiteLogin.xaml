@@ -9,6 +9,10 @@
       Title="SiteLogin">
 
     <Grid>
+        <Label x:Name="Label_Error"  HorizontalAlignment="Center"  TextBlock.TextAlignment="Center" Margin="0,274,0,0" VerticalAlignment="Top" Width="144"/>
+        <TextBox x:Name="TextBox_Key" TextChanged="TextBox_Key_TextChanged" MouseMove="TextBox_Key_MouseMove" MouseLeave="TextBox_Key_MouseLeave" Text="" HorizontalAlignment="Center" FontSize="17" TextBlock.TextAlignment="Center" Margin="0,247,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="144" Height="27"/>
+        <Label x:Name="Label_Key"  HorizontalAlignment="Left" Margin="328,221,0,0" VerticalAlignment="Top"/>
         
+
     </Grid>
 </Page>

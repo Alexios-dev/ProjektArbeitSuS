@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ProjektArbeitSuS.Windows.Controller
 {
-    internal class IOConrtoller
+    internal class Data
     {
+        public int Zahl;
     }
 }
