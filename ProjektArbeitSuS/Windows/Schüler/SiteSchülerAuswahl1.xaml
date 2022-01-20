@@ -11,8 +11,9 @@
     <Grid>
         <DataGrid x:Name="DataGrid_DataGrid" MouseMove="DataGrid_DataGrid_MouseMove" MouseLeave="DataGrid_DataGrid_MouseLeave" HorizontalAlignment="Center" ItemsSource="{Binding}" AutoGenerateColumns="False" Height="382" VerticalAlignment="Center" Width="661">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="DataGridTextColumn_Datum" Binding="{Binding Datum}" Header="Datum"/>
-                <DataGridTextColumn x:Name="DataGridTextColumn_Uhrzeit" Binding="{Binding Uhrzeit}" Header="Uhrzeit"/>
+                <DataGridTextColumn x:Name="DataGridTextColumn_Schüler" Binding="{Binding Schüler}" Header="Schüler"/>
+                <DataGridTextColumn x:Name="DataGridTextColumn_UhrzeitVon" Binding="{Binding Uhrzeit}" Header="UhrzeitVon"/>
+                <DataGridTextColumn x:Name="DataGridTextColumn_UhrzeitBis" Binding="{Binding UhrzeitBis}" Header="UhrzeitBis"/>
                 <DataGridTextColumn x:Name="DataGridTextColumn_Lehrer" Binding="{Binding Lehrer}" Header="Lehrer"/>
                 <DataGridTextColumn x:Name="DataGridTextColumn_Fach" Binding="{Binding Fach}" Header="Fach"/>
                 <DataGridTextColumn x:Name="DataGridTextColumn_Raum" Binding="{Binding Raum}" Header="Raum"/>
