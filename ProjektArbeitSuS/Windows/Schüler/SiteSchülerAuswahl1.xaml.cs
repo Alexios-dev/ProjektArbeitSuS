@@ -21,6 +21,7 @@ namespace ProjektArbeitSuS.Windows.Schüler
     public partial class SiteSchülerAuswahl1 : Page
     {
         public MainWindow mainwindow = Application.Current.MainWindow as MainWindow;
+        // Hier fügen wir ein Label hinzu um nachher in das objekt das objekt Label_Help zu importieren
         public Label Label_Help = new Label();
         public SiteSchülerAuswahl1(Label help)
         {
