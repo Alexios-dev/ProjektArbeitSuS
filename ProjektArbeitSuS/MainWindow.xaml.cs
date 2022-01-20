@@ -21,19 +21,23 @@ namespace ProjektArbeitSuS
     public partial class MainWindow : Window
     {
         public int Key;
-        public Windows.Login.SiteLogin Login = new Windows.Login.SiteLogin();
-        
+        public Windows.Login.SiteLogin Window_Login = new Windows.Login.SiteLogin();
+        public Windows.Controller.SiteConnector Window_Connector = new Windows.Controller.SiteConnector();
         public MainWindow()
         {
             InitializeComponent();
-            MainFrame.Content = Login.Content;
+            MainFrame.Content = Window_Login.Content;
         }
         public bool LoginExit(int key)
         {
             //Hier kommt die spätere Login Lösung rein
-            if(Convert.ToString(key).Length == 10)
+            if (Convert.ToString(key).Length == 10)
             {
                 Key = key;
+                Label_Martikelnummer.Content = "Martik "+Convert.ToString(Key);
+                MessageBox.Show(Convert.ToString(Key));
+                MainFrame.Content = Window_Connector;
+                
                 return true;
             }
             else

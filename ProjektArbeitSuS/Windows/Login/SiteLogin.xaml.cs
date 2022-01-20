@@ -20,6 +20,8 @@ namespace ProjektArbeitSuS.Windows.Login
     /// </summary>
     public partial class SiteLogin : Page
     {
+        // Hier ist unser Fenster zum Einloggen 
+        // Key ist die Martikelnummer
         public int Key;
         public SiteLogin()
         {
@@ -27,6 +29,8 @@ namespace ProjektArbeitSuS.Windows.Login
             InitializeComponent();
         }
 
+        // MouseMove und Leave bewirken das anzeigen der info textbox wenn man über die TextBox Hoverd
+        //------------------------------------------------------------------------------------------
         private void TextBox_Key_MouseMove(object sender, MouseEventArgs e)
         {
             Label_Key.Content = "Martikelnummer";
@@ -37,14 +41,20 @@ namespace ProjektArbeitSuS.Windows.Login
         {
             Label_Key.Content = "";
         }
-
+        //------------------------------------------------------------------------------------------
+        // Hier geht es um den eigentlichen Login vorgang
+        //------------------------------------------------------------------------------------------
         private void TextBox_Key_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (TextBox_Key.Text.Length != 0)
             {
+                // zum prüfen ob die eingegebene Nummer auch wirklich eine nummer ist und keine zahlen enthält und zur begrenzung auf Maximal
+                // 10 Zahlen die in die TextBox eingegeben werden können
+                //------------
                 try
                 {
                     int a = Convert.ToInt32(TextBox_Key.Text);
+                    //zum zurücksetzten des Label_Error.Content das kein wert angezeigt wird weil kein fehler auftritt 
                     Label_Error.Content = string.Empty; ;
                 }
                 catch
@@ -60,26 +70,34 @@ namespace ProjektArbeitSuS.Windows.Login
                     }
                     return;
                 }
+                //------------
+                //hier wird der eigentliche Key überprüft
+                //------------
                 if (TextBox_Key.Text.Length == 10)
                 {
+                    // Neues Object wird mit dem bestehendem Mainwindow verbunden 
                     MainWindow mainwindow = Application.Current.MainWindow as MainWindow;
-                    bool abfrage = mainwindow.LoginExit(Key);
+                    // Hier rückgabewert der überprüfung des Keys bei bool wird der neue Key hier gespeichert für zukünftige extensions
+                    bool abfrage = mainwindow.LoginExit(Convert.ToInt32(TextBox_Key.Text));
                     if (abfrage)
                     {
-                        this.Visibility = Visibility.Hidden;
+                        Key = Convert.ToInt32(TextBox_Key.Text);
 
                     }
                     else
                     {
+                        // Wenn der Key falsch ist wird das Hier im Label_Error ´übertragen
                         Label_Error.Content = "Falsche Martikelnummer";
                     }                    
                 }
-                
+                //------------
             }
             else
             {
+                //zum zurücksetzten des Label_Error.Content das kein wert angezeigt wird wenn nichts in der TextBox steht
                 Label_Error.Content = string.Empty;
             }
         }
+        //------------------------------------------------------------------------------------------
     }
 }
