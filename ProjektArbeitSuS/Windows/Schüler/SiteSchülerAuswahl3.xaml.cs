@@ -16,26 +16,46 @@ using System.Windows.Shapes;
 namespace ProjektArbeitSuS.Windows.Schüler
 {
     /// <summary>
-    /// Interaktionslogik für SiteSchülerAuswahl2.xaml
+    /// Interaktionslogik für SiteSchülerAuswahl3.xaml
     /// </summary>
-    public partial class SiteSchülerAuswahl2 : Page
+    public partial class SiteSchülerAuswahl3 : Page
     {
         public MainWindow mainwindow = Application.Current.MainWindow as MainWindow;
+        DbConnection.SuSContext DBConnection = new DbConnection.SuSContext();
         // Hier fügen wir ein Label hinzu um nachher in das objekt das objekt Label_Help zu importieren
         public Label Label_Help = new Label();
-        public SiteSchülerAuswahl2(Label help)
+
+        public bool Refresh()
         {
-            InitializeComponent();
-            Label_Help = help;
+            
+            try
+            {
+                DataGrid_DataGrid.Items.Clear();
+                foreach(var a in DBConnection.Faches)
+                {
+                    DataGrid_DataGrid.Items.Add(a);
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
-        /*private void DataGrid_DataGrid_MouseMove(object sender, MouseEventArgs e)
+        public SiteSchülerAuswahl3(Label help)
         {
-            Label_Help.Content = "Hier werden\nalle aktuellen\nFehlzeiten\nin einer\nGrafischen Anzeige\nangezeigt";
+            Label_Help = help;
+            InitializeComponent();
+        }
+
+        private void DataGrid_DataGrid_MouseMove(object sender, MouseEventArgs e)
+        {
+            Label_Help.Content = "Hier werden\nalle aufenthalts\nOrte angezeigt\nmit Uhrzeit\nund Lehrer ";
         }
 
         private void DataGrid_DataGrid_MouseLeave(object sender, MouseEventArgs e)
         {
             Label_Help.Content = "";
-        }*/
+        }
     }
 }

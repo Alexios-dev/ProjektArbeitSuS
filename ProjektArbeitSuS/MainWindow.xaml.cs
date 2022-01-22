@@ -20,7 +20,7 @@ namespace ProjektArbeitSuS
     /// </summary>
     public partial class MainWindow : Window
     {
-        // scaffold-dbcontext "Data Source=localhost;Initial Catalog=SuS;Integrated Security=True;" Microsoft.EntityFrameworkCore.SqlServer -ContextDir "DbConnection"
+        // scaffold-dbcontext "Data Source=localhost;Initial Catalog=SuS;Integrated Security=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir "Klassen" -ContextDir "DbConnection"
         public int Key;
         public Windows.Login.SiteLogin Window_Login = new Windows.Login.SiteLogin();
         public Windows.Controller.SiteConnector Window_Connector = new Windows.Controller.SiteConnector();
@@ -35,7 +35,7 @@ namespace ProjektArbeitSuS
             if (Convert.ToString(key).Length == 10)
             {
                 Key = key;
-                Label_Martikelnummer.Content = "Martik "+Convert.ToString(Key);
+                Label_Matrikelnummer.Content = Convert.ToString(Key);
                 Window_Connector.Key = Key;
                 MainFrame.Content = Window_Connector;
                 

@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Folder Include="DbConnection\" />
+    <Folder Include="Klassen\" />
     <Folder Include="Windows\Lehrer\" />
   </ItemGroup>
 

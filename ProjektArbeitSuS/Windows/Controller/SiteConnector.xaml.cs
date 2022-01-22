@@ -81,14 +81,18 @@ namespace ProjektArbeitSuS.Windows.Controller
             Label_Auswahl2.Content = "";
             Label_Help.Content = "";
         }
+        private void Button_Auswahl2_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Content = new Windows.Schüler.SiteSchülerAuswahl2(Label_Help);
+        }
         private void Button_Auswahl3_MouseMove(object sender, MouseEventArgs e)
         {
             if (Convert.ToString(Key).Substring(0, 1) == "1")
             {
-                Label_Auswahl3.Content = "Keine Funktion";
+                Label_Auswahl3.Content = "Anwesenheits Liste";
                 if (Help)
                 {
-                    Label_Help.Content = "keine Funktion \nhier wird \nspäter ein \nweiters tool \nAngezeigt";
+                    Label_Help.Content = "Hier werden \nalle Logins bei \nden RFIDLesern \nangezeigt zur\nüberprüfung";
                 }
             }
         }
@@ -96,6 +100,10 @@ namespace ProjektArbeitSuS.Windows.Controller
         {
             Label_Auswahl3.Content = "";
             Label_Help.Content = "";
+        }
+        private void Button_Auswahl3_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Content = new Windows.Schüler.SiteSchülerAuswahl3(Label_Help);
         }
         //Hier wird Help Aktieviert / Deaktieviert und beim drücken auf den button help resetet sollte es aus irgendwelchen
         //gründen mal hängen
@@ -107,12 +115,14 @@ namespace ProjektArbeitSuS.Windows.Controller
                 Help = true;
                 Label_Help.Content = null;
                 Label_Help.Visibility = Visibility.Visible;
+                Button_Help.Content = "Help OFF";
             }
             else
             {
                 Help = false;
                 Label_Help.Content = null;
                 Label_Help.Visibility=Visibility.Hidden;
+                Button_Help.Content = "Help ON";
             }
         }
         //----------------------------------------------------------------------------------------------------

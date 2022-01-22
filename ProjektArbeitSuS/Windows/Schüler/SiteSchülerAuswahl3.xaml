@@ -1,4 +1,4 @@
-﻿<Page x:Class="ProjektArbeitSuS.Windows.Schüler.SiteSchülerAuswahl1"
+﻿<Page x:Class="ProjektArbeitSuS.Windows.Schüler.SiteSchülerAuswahl3"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,16 +6,16 @@
       xmlns:local="clr-namespace:ProjektArbeitSuS.Windows.Schüler"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="SiteSchülerAuswahl1">
+      Title="SiteSchülerAuswahl3">
 
     <Grid>
         <DataGrid x:Name="DataGrid_DataGrid" MouseMove="DataGrid_DataGrid_MouseMove" MouseLeave="DataGrid_DataGrid_MouseLeave" HorizontalAlignment="Center" ItemsSource="{Binding}" AutoGenerateColumns="False" Height="382" VerticalAlignment="Center" Width="661">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="DataGridTextColumn_Fach" Binding="{Binding Fach}" Header="Fach"/>
                 <DataGridTextColumn x:Name="DataGridTextColumn_ID" Binding="{Binding ID}" Header="ID" Visibility="Hidden"/>
-                <DataGridTextColumn x:Name="DataGridTextColumn_DatumVon" Binding="{Binding DatumVon}" Header="DatumVon"/>
-                <DataGridTextColumn x:Name="DataGridTextColumn_DatumBis" Binding="{Binding DatumBis}" Header="DatumBis"/>
-                <DataGridTextColumn x:Name="DataGridTextColumn_Entschuldigt" Binding="{Binding Entschuldigt}" Header="Entschuldigt"/>
+                <DataGridTextColumn x:Name="DataGridTextColumn_Raum" Binding="{Binding Raum}" Header="Raum"/>
+                <DataGridTextColumn x:Name="DataGridTextColumn_DatumVon" Binding="{Binding DatumVon}" Header="Uhrzeit Von"/>
+
+                <DataGridTextColumn x:Name="DataGridTextColumn_DatumBis" Binding="{Binding DatumBis}" Header="Uhrzeit Bis"/>
                 <DataGridTextColumn x:Name="DataGridTextColumn_Lehrer" Binding="{Binding Lehrer}" Header="Lehrer"/>
             </DataGrid.Columns>
         </DataGrid>

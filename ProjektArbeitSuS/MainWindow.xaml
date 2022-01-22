@@ -8,7 +8,8 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
-        <Label x:Name="Label_Martikelnummer" Content="sss" HorizontalAlignment="Left" Margin="10,364,0,0" VerticalAlignment="Top" Width="150"/>
+        <Label x:Name="Label_Matrikelnummer" Content="" HorizontalAlignment="Left" Margin="7,369,0,0" VerticalAlignment="Top" Width="150"/>
+        <Label x:Name="Label_MatrikelnummerText" Content="Matrikelnummer" HorizontalAlignment="Left" Margin="7,355,0,0" VerticalAlignment="Top" Width="150"/>
 
     </Grid>
 </Window>
