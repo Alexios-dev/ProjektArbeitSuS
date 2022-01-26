@@ -1,113 +1,118 @@
 ﻿-- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2022-01-21 23:13:17.186
+-- Last modification date: 2022-01-23 13:39:27.047
+drop DATABASE if EXISTS SuS;
+CREATE DATABASE SuS;
+USE SuS;
+GO
 
 -- tables
 -- Table: DatenLehrer
+
 CREATE TABLE DatenLehrer (
-    ID int  NOT NULL IDENTITY(1, 1),
+    ID bigint  NOT NULL IDENTITY(1, 1),
     DatumVon datetime  NULL,
-    Lehrer_Matrikelnummer int  NOT NULL,
-    RFIDLeser_ID int  NOT NULL,
+    Lehrer_Matrikelnummer bigint  NOT NULL,
+    RFIDLeser_ID bigint  NOT NULL,
     CONSTRAINT DatenLehrer_pk PRIMARY KEY  (ID)
 );
 
 -- Table: DatenSchueler
 CREATE TABLE DatenSchueler (
-    ID int  NOT NULL IDENTITY(1, 1),
+    ID bigint  NOT NULL IDENTITY(1, 1),
     DatumVon datetime  NULL,
-    Schueler_Matrikelnummer int  NOT NULL,
-    RFIDLeser_ID int  NOT NULL,
+    Schueler_Matrikelnummer bigint  NOT NULL,
+    RFIDLeser_ID bigint  NOT NULL,
     CONSTRAINT DatenSchueler_pk PRIMARY KEY  (ID)
 );
 
 -- Table: Fach
 CREATE TABLE Fach (
-    ID int  NOT NULL IDENTITY(1, 1),
-    Name varchar(50)  NOT NULL,
+    ID bigint  NOT NULL IDENTITY(1, 1),
+    Name varchar(50)  NULL,
     CONSTRAINT Fach_pk PRIMARY KEY  (ID)
 );
 
 -- Table: Fehlzeiten
 CREATE TABLE Fehlzeiten (
-    ID int  NOT NULL IDENTITY(1, 1),
+    ID bigint  NOT NULL IDENTITY(1, 1),
     DatumVon datetime  NULL,
     DatumBis datetime  NULL,
-    Entschuldigt int  NOT NULL,
-    Lehrer_Matrikelnummer int  NOT NULL,
-    Schueler_Matrikelnummer int  NOT NULL,
+    Entschuldigt bigint  NOT NULL,
+    Lehrer_Matrikelnummer bigint  NOT NULL,
+    Schueler_Matrikelnummer bigint  NOT NULL,
     CONSTRAINT Fehlzeiten_pk PRIMARY KEY  (ID)
 );
 
 -- Table: Lehrer
 CREATE TABLE Lehrer (
-    Matrikelnummer int  NOT NULL,
-    Vorname varchar(50)  NOT NULL,
-    Nachname varchar(50)  NOT NULL,
-    Geburtsdatum date  NOT NULL,
-    Kuerzel varchar(50)  NOT NULL,
-    Password varchar(255)  NOT NULL,
-    RFIDChip_UID int  NOT NULL,
+    Matrikelnummer bigint  NOT NULL,
+    Vorname varchar(50)  NULL,
+    Nachname varchar(50)  NULL,
+    Geburtsdatum date  NULL,
+    Kuerzel varchar(50)  NULL,
+    Passwordd varchar(255)  NULL,
+    RFIDChip_UID bigint  NOT NULL,
     CONSTRAINT Lehrer_pk PRIMARY KEY  (Matrikelnummer)
 );
 
 -- Table: Lehrer_StundenplanStunden
 CREATE TABLE Lehrer_StundenplanStunden (
-    Lehrer_Matrikelnummer int  NOT NULL,
-    StundenplanStunden_ID int  NOT NULL,
+    Lehrer_Matrikelnummer bigint  NOT NULL,
+    StundenplanStunden_ID bigint  NOT NULL,
     CONSTRAINT Lehrer_StundenplanStunden_pk PRIMARY KEY  (StundenplanStunden_ID,Lehrer_Matrikelnummer)
 );
 
 -- Table: RFIDChip
 CREATE TABLE RFIDChip (
-    UID int  NOT NULL,
-    Number int  NOT NULL,
+    UID bigint  NOT NULL,
+    Number bigint  NULL,
     CONSTRAINT RFIDChip_pk PRIMARY KEY  (UID)
 );
 
 -- Table: RFIDLeser
 CREATE TABLE RFIDLeser (
-    ID int  NOT NULL IDENTITY(1, 1),
+    ID bigint  NOT NULL IDENTITY(1, 1),
     Name varchar(50)  NULL,
     CONSTRAINT RFIDLeser_pk PRIMARY KEY  (ID)
 );
 
 -- Table: Schueler
 CREATE TABLE Schueler (
-    Matrikelnummer int  NOT NULL IDENTITY(1, 1),
+    Matrikelnummer bigint  NOT NULL,
     Vorname varchar(50)  NULL,
     Nachname varchar(50)  NULL,
     Geburtsdatum date  NULL,
-    password varchar(255)  NULL,
-    RFIDChip_UID int  NOT NULL,
-    SchuhlKlassen_ID int  NOT NULL,
+    Passwordd varchar(255)  NULL,
+    RFIDChip_UID bigint  NOT NULL,
+    SchuhlKlassen_ID bigint  NOT NULL,
     CONSTRAINT Schueler_pk PRIMARY KEY  (Matrikelnummer)
 );
 
 -- Table: SchuhlKlassen
 CREATE TABLE SchuhlKlassen (
-    ID int  NOT NULL IDENTITY(1, 1),
-    Name varchar(50)  NOT NULL,
-    Lehrer_Matrikelnummer int  NOT NULL,
+    ID bigint  NOT NULL IDENTITY(1, 1),
+    Name varchar(50)  NULL,
+    Lehrer_Matrikelnummer bigint  NOT NULL,
     CONSTRAINT SchuhlKlassen_pk PRIMARY KEY  (ID)
 );
 
 -- Table: Stundenplan
 CREATE TABLE Stundenplan (
-    ID int  NOT NULL IDENTITY(1, 1),
-    SchuhlKlassen_ID int  NOT NULL,
+    ID bigint  NOT NULL IDENTITY(1, 1),
+    SchuhlKlassen_ID bigint  NOT NULL,
     CONSTRAINT Stundenplan_pk PRIMARY KEY  (ID)
 );
 
 -- Table: StundenplanStunden
 CREATE TABLE StundenplanStunden (
-    ID int  NOT NULL IDENTITY(1, 1),
-    DateTimeVon datetime  NOT NULL,
-    DateTimeBis datetime  NOT NULL,
-    Fach_ID int  NOT NULL,
-    Stundenplan_ID int  NOT NULL,
+    ID bigint  NOT NULL IDENTITY(1, 1),
+    DateTimeVon datetime  NULL,
+    DateTimeBis datetime  NULL,
+    Fach_ID bigint  NOT NULL,
+    Stundenplan_ID bigint  NOT NULL,
     CONSTRAINT StundenplanStunden_pk PRIMARY KEY  (ID)
 );
-GO
+
 -- foreign keys
 -- Reference: DatenLehrer_Lehrer (table: DatenLehrer)
 ALTER TABLE DatenLehrer ADD CONSTRAINT DatenLehrer_Lehrer
@@ -187,6 +192,10 @@ ALTER TABLE Stundenplan ADD CONSTRAINT Stundenplan_SchuhlKlassen
 -- End of file.
 
 
+GO
+
+
+
 --Fach
 INSERT INTO Fach(Name)
 Values('Deutsch');--0
@@ -251,30 +260,30 @@ VALUES ('A104');
 INSERT INTO RFIDLeser(Name)
 VALUES ('A105');
 INSERT INTO RFIDLeser(Name)
-VALUES ('A106');
+VALUES ('A106');      
 
 GO
 --Lehrer
-INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,RFIDChip_UID)
-VALUES (5016889977,'Steffan','Erlei','1990/01/01','ER',00000001);
-INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,RFIDChip_UID)
-VALUES (5016889978,'Mara','Jansen','1990/01/02','JA',00000002);
-INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,RFIDChip_UID)
-VALUES (5016889979,'Frank','Wächter','1990/01/01','WÄ',00000003);
-INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,RFIDChip_UID)
-VALUES (5016889981,'Boris','Hegermann','1990/01/01','HA',00000004);
-INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,RFIDChip_UID)
-VALUES (5016889982,'Ali','Bostanci','1990/01/02','BC',00000005);
-INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,RFIDChip_UID)
-VALUES (5016889983,'Andreas','Burdenski','1990/01/05','BD',00000006);
-INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,RFIDChip_UID)
-VALUES (5016889984,'Holger','Hüller','1990/01/01','HÜ',00000007);
-INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,RFIDChip_UID)
-VALUES (5016889985,'Detlef','Gotthardt','1990/01/02','GH',00000008);
-INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,RFIDChip_UID)
-VALUES (5016889986,'Stefan','Opalla','199/001/03','OP',00000009);
-INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,RFIDChip_UID)
-VALUES (5016889987,'Dennis','Netterdon','1990/01/05','NT',00000010);
+INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,Passwordd,RFIDChip_UID)
+VALUES (5016889977,'Steffan','Erlei','1990/01/01','ER','NULL',00000001);
+INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,Passwordd,RFIDChip_UID)
+VALUES (5016889978,'Mara','Jansen','1990/01/01','JA','NULL',00000002);
+INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,Passwordd,RFIDChip_UID)
+VALUES (5016889979,'Frank','Wächter','1990/01/01','WÄ','NULL',00000003);
+INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,Passwordd,RFIDChip_UID)
+VALUES (5016889981,'Boris','Hegermann','1990/01/01','HA','NULL',00000004);
+INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,Passwordd,RFIDChip_UID)
+VALUES (5016889982,'Ali','Bostanci','1990/01/01','BC','NULL',00000005);
+INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,Passwordd,RFIDChip_UID)
+VALUES (5016889983,'Andreas','Burdenski','1990/01/01','BD','NULL',00000006);
+INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,Passwordd,RFIDChip_UID)
+VALUES (5016889984,'Holger','Hüller','1990/01/01','HÜ','NULL',00000007);
+INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,Passwordd,RFIDChip_UID)
+VALUES (5016889985,'Detlef','Gotthardt','1990/01/01','GH','NULL',00000008);
+INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,Passwordd,RFIDChip_UID)
+VALUES (5016889986,'Stefan','Opalla','1990/01/01','OP','NULL',00000009);
+INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,Passwordd,RFIDChip_UID)
+VALUES (5016889987,'Dennis','Netterdon','1990/01/01','NT','NULL',00000010);
 GO
 
 --Schuhl Klassen
@@ -296,111 +305,122 @@ GO
 --StundenplanStunde
 --Montag
 INSERT INTO StundenplanStunden(DateTimeVon,DateTimeBis,Fach_ID,Stundenplan_ID)
-Values ('2022/01/17 8:30:00','2022/01/17 9:15:00',5,1);
+Values (CONVERT(DATETIME, '2022/01/17 08:30:00',120),CONVERT(DATETIME, '2022/01/17 09:15:00',120),6,1);
 INSERT INTO StundenplanStunden(DateTimeVon,DateTimeBis,Fach_ID,Stundenplan_ID)
-Values ('2022/01/17 9:40:00','2022/01/17 11:10:00',6,1);
+Values (CONVERT(DATETIME, '2022/01/17 09:40:00',120),CONVERT(DATETIME, '2022/01/17 11:10:00',120),7,1);
 INSERT INTO StundenplanStunden(DateTimeVon,DateTimeBis,Fach_ID,Stundenplan_ID)
-Values ('2022/01/17 11:30:00','2022/01/17 12:15:00',7,1);
+Values (CONVERT(DATETIME, '2022/01/17 11:30:00',120),CONVERT(DATETIME, '2022/01/17 12:15:00',120),8,1);
 INSERT INTO StundenplanStunden(DateTimeVon,DateTimeBis,Fach_ID,Stundenplan_ID)
-Values ('2022/01/17 12:15:00','2022/01/17 13:00:00',7,1);
+Values (CONVERT(DATETIME, '2022/01/17 12:15:00',120),CONVERT(DATETIME, '2022/01/17 13:00:00',120),8,1);
 GO
 --Dienstag
 INSERT INTO StundenplanStunden(DateTimeVon,DateTimeBis,Fach_ID,Stundenplan_ID)
-Values ('2022/01/18 9:40:00','2022/01/17 11:10:00',8,1);
+Values (CONVERT(DATETIME, '2022/01/18 09:40:00',120),CONVERT(DATETIME, '2022/01/18 11:10:00',120),9,1);
 INSERT INTO StundenplanStunden(DateTimeVon,DateTimeBis,Fach_ID,Stundenplan_ID)
-Values ('2022/01/18 11:30:00','2022/01/17 13:00:00',2,1);
+Values (CONVERT(DATETIME, '2022/01/18 11:30:00',120),CONVERT(DATETIME, '2022/01/18 13:00:00',120),3,1);
 GO
 --Mittwoch
 INSERT INTO StundenplanStunden(DateTimeVon,DateTimeBis,Fach_ID,Stundenplan_ID)
-Values ('2022/01/19 7:45:00','2022/01/17 9:15:00',4,1);
+Values (CONVERT(DATETIME, '2022/01/19 07:45:00',120),CONVERT(DATETIME, '2022/01/19 09:15:00',120),5,1);
 INSERT INTO StundenplanStunden(DateTimeVon,DateTimeBis,Fach_ID,Stundenplan_ID)
-Values ('2022/01/19 9:40:00','2022/01/17 11:10:00',3,1);
+Values (CONVERT(DATETIME, '2022/01/19 09:40:00',120),CONVERT(DATETIME, '2022/01/19 11:10:00',120),4,1);
 INSERT INTO StundenplanStunden(DateTimeVon,DateTimeBis,Fach_ID,Stundenplan_ID)
-Values ('2022/01/19 11:30:00','2022/01/17 13:00:00',1,1);
+Values (CONVERT(DATETIME, '2022/01/19 11:30:00',120),CONVERT(DATETIME, '2022/01/19 13:00:00',120),2,1);
 GO
 --Donnerstag
 INSERT INTO StundenplanStunden(DateTimeVon,DateTimeBis,Fach_ID,Stundenplan_ID)
-Values ('2022/01/20 7:45:00','2022/01/17 9:15:00',4,1);
+Values (CONVERT(DATETIME, '2022/01/20 07:45:00',120),CONVERT(DATETIME,'2022/01/20 09:15:00',120),5,1);
 INSERT INTO StundenplanStunden(DateTimeVon,DateTimeBis,Fach_ID,Stundenplan_ID)
-Values ('2022/01/20 9:40:00','2022/01/17 11:10:00',7,1);
+Values (CONVERT(DATETIME, '2022/01/20 9:40:00',120),CONVERT(DATETIME, '2022/01/20 11:10:00',120),8,1);
 INSERT INTO StundenplanStunden(DateTimeVon,DateTimeBis,Fach_ID,Stundenplan_ID)
-Values ('2022/01/20 11:30:00','2022/01/17 13:00:00',0,1);
+Values (CONVERT(DATETIME, '2022/01/20 11:30:00',120),CONVERT(DATETIME,'2022/01/20 13:00:00',120),1,1);
 GO
 --Freitag
 INSERT INTO StundenplanStunden(DateTimeVon,DateTimeBis,Fach_ID,Stundenplan_ID)
-Values ('2022/01/21 7:45:00','2022/01/17 9:15:00',3,1);
+Values (CONVERT(DATETIME, '2022/01/21 07:45:00',120),CONVERT(DATETIME,'2022/01/21 09:15:00',120),4,1);
 INSERT INTO StundenplanStunden(DateTimeVon,DateTimeBis,Fach_ID,Stundenplan_ID)
-Values ('2022/01/21 9:40:00','2022/01/17 11:10:00',5,1);
+Values (CONVERT(DATETIME, '2022/01/21 09:40:00',120),CONVERT(DATETIME,'2022/01/21 11:10:00',120),6,1);
 INSERT INTO StundenplanStunden(DateTimeVon,DateTimeBis,Fach_ID,Stundenplan_ID)
-Values ('2022/01/21 11:30:00','2022/01/17 13:00:00',9,1);
+Values (CONVERT(DATETIME, '2022/01/21 11:30:00',120),CONVERT(DATETIME,'2022/01/21 13:00:00',120),10,1);
 GO
 --Lehrer_StundenplanStunden
 INSERT INTO Lehrer_StundenplanStunden(StundenplanStunden_ID,Lehrer_Matrikelnummer)
-Values (0,5016889981);
+Values (1,5016889981);
 INSERT INTO Lehrer_StundenplanStunden(StundenplanStunden_ID,Lehrer_Matrikelnummer)
-Values (1,5016889982);
+Values (2,5016889982);
 INSERT INTO Lehrer_StundenplanStunden(StundenplanStunden_ID,Lehrer_Matrikelnummer)
-Values (2,5016889986);
-INSERT INTO Lehrer_StundenplanStunden(StundenplanStunden_ID,Lehrer_Matrikelnummer)
-Values (3,5016889983);
-
+Values (3,5016889986);
 INSERT INTO Lehrer_StundenplanStunden(StundenplanStunden_ID,Lehrer_Matrikelnummer)
 Values (4,5016889983);
-INSERT INTO Lehrer_StundenplanStunden(StundenplanStunden_ID,Lehrer_Matrikelnummer)
-Values (5,5016889977);
 
 INSERT INTO Lehrer_StundenplanStunden(StundenplanStunden_ID,Lehrer_Matrikelnummer)
-Values (6,5016889984);
+Values (5,5016889983);
 INSERT INTO Lehrer_StundenplanStunden(StundenplanStunden_ID,Lehrer_Matrikelnummer)
-Values (7,5016889979);
-INSERT INTO Lehrer_StundenplanStunden(StundenplanStunden_ID,Lehrer_Matrikelnummer)
-Values (8,5016889985);
+Values (6,5016889977);
 
 INSERT INTO Lehrer_StundenplanStunden(StundenplanStunden_ID,Lehrer_Matrikelnummer)
-Values (9,5016889984);
+Values (7,5016889984);
 INSERT INTO Lehrer_StundenplanStunden(StundenplanStunden_ID,Lehrer_Matrikelnummer)
-Values (10,5016889986);
+Values (8,5016889979);
 INSERT INTO Lehrer_StundenplanStunden(StundenplanStunden_ID,Lehrer_Matrikelnummer)
-Values (11,5016889978);
+Values (9,5016889985);
 
 INSERT INTO Lehrer_StundenplanStunden(StundenplanStunden_ID,Lehrer_Matrikelnummer)
-Values (12,5016889979);
+Values (10,5016889984);
 INSERT INTO Lehrer_StundenplanStunden(StundenplanStunden_ID,Lehrer_Matrikelnummer)
-Values (13,5016889986);
+Values (11,5016889986);
 INSERT INTO Lehrer_StundenplanStunden(StundenplanStunden_ID,Lehrer_Matrikelnummer)
-Values (14,5016889987);
+Values (12,5016889978);
+
+INSERT INTO Lehrer_StundenplanStunden(StundenplanStunden_ID,Lehrer_Matrikelnummer)
+Values (13,5016889979);
+INSERT INTO Lehrer_StundenplanStunden(StundenplanStunden_ID,Lehrer_Matrikelnummer)
+Values (14,5016889986);
+INSERT INTO Lehrer_StundenplanStunden(StundenplanStunden_ID,Lehrer_Matrikelnummer)
+Values (15,5016889987);
 
 GO
 --Schueler
-INSERT INTO Schueler(Matrikelnummer,Vorname,Nachname,Geburtsdatum,RFIDChip_UID,SchuhlKlassen_ID)
-Values (2219135532,'Alexander','Genenger','´2003/03/03',00000011,1);
+INSERT INTO Schueler(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Passwordd,RFIDChip_UID,SchuhlKlassen_ID)
+Values (2219135532,'Alexander','Genenger','2003/03/03','NULL',00000011,1);
 
 GO
 --DatenSchueler
 -- 2 Stunde
+
+
 INSERT INTO DatenSchueler(DatumVon,Schueler_Matrikelnummer,RFIDLeser_ID)
-Values ('2022/01/17 08:30:00',2219135532,'1');
+Values (CONVERT(DATETIME, '2022/01/17 8:30:00',120),2219135532,2);
 INSERT INTO DatenSchueler(DatumVon,Schueler_Matrikelnummer,RFIDLeser_ID)
-Values ('2022/01/17 08:46:00',2219135532,'1');
+Values (CONVERT(DATETIME, '2022/01/17 8:46:20',120),2219135532,2);
 INSERT INTO DatenSchueler(DatumVon,Schueler_Matrikelnummer,RFIDLeser_ID)
-Values ('2022/01/17 08:50:50',2219135532,'1');
+Values (CONVERT(DATETIME, '2022/01/17 8:50:50',120),2219135532,2);
 INSERT INTO DatenSchueler(DatumVon,Schueler_Matrikelnummer,RFIDLeser_ID)
-Values ('2022/01/17 09:15:00',2219135532,'1');
+Values (CONVERT(DATETIME, '2022/01/17 09:15:00',120),2219135532,2);
+GO
 
 -- 3-4 Stunde
 INSERT INTO DatenSchueler(DatumVon,Schueler_Matrikelnummer,RFIDLeser_ID)
-Values ('2022/01/17 09:40:00',2219135532,'2');
+Values (CONVERT(DATETIME, '2022/01/17 09:40:00',120),2219135532,3);
 INSERT INTO DatenSchueler(DatumVon,Schueler_Matrikelnummer,RFIDLeser_ID)
-Values ('2022/01/17 11:10:00',2219135532,'2');
+Values (CONVERT(DATETIME, '2022/01/17 11:10:00',120),2219135532,3);
+GO
 
 -- 5-6 Stunde
 INSERT INTO DatenSchueler(DatumVon,Schueler_Matrikelnummer,RFIDLeser_ID)
-Values ('2022/01/17 11:30:00',2219135532,'2');
+Values (CONVERT(DATETIME, '2022/01/17 11:30:00',120),2219135532,3);
 INSERT INTO DatenSchueler(DatumVon,Schueler_Matrikelnummer,RFIDLeser_ID)
-Values ('2022/01/17 13:00:00',2219135532,'2');
+Values (CONVERT(DATETIME, '2022/01/17 13:00:00',120),2219135532,3);
+
 
 GO
 --DatenLehrer
 INSERT INTO DatenLehrer(DatumVon,Lehrer_Matrikelnummer,RFIDLeser_ID)
-Values ('2022/01/17 08:30:00',5016889981,1);
+Values (CONVERT(DATETIME, '2022/01/17 08:30:00',120),5016889981,2);
 GO
+Select * From Lehrer
+Select * From Stundenplan
+Select * From Lehrer_StundenplanStunden
+Select * From Schueler
+Select * From DatenSchueler
+Select * From SchuhlKlassen
