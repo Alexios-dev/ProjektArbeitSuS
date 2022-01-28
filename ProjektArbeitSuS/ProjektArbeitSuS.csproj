@@ -8,8 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DbConnection\" />
-    <Folder Include="Klassen\" />
+    <Page Remove=".xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Context\" />
     <Folder Include="Windows\Lehrer\" />
   </ItemGroup>
 

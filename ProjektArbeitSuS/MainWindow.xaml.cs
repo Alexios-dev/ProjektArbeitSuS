@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace ProjektArbeitSuS
 {
     /// <summary>
@@ -20,26 +21,38 @@ namespace ProjektArbeitSuS
     /// </summary>
     public partial class MainWindow : Window
     {
+
         // scaffold-dbcontext "Data Source=localhost;Initial Catalog=SuS;Integrated Security=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir "Klassen" -ContextDir "DbConnection"
-        public int Key;
+        public Model.Schueler schueler;
         public Windows.Login.SiteLogin Window_Login = new Windows.Login.SiteLogin();
         public Windows.Controller.SiteConnector Window_Connector = new Windows.Controller.SiteConnector();
+        Model.SUSContext DBConnection = new Model.SUSContext();
         public MainWindow()
         {
             InitializeComponent();
             MainFrame.Content = Window_Login.Content;
         }
-        public bool LoginExit(int key)
+        public bool LoginExit(long key)
         {
+            
             //Hier kommt die spätere Login Lösung rein
             if (Convert.ToString(key).Length == 10)
             {
-                Key = key;
-                Label_Matrikelnummer.Content = Convert.ToString(Key);
-                Window_Connector.Key = Key;
-                MainFrame.Content = Window_Connector;
-                
-                return true;
+                MessageBox.Show("s");
+                foreach (var a in DBConnection.Schuelers)
+                {
+                    if(key == a.Matrikelnummer)
+                    {
+                        schueler = a;
+                        Label_Matrikelnummer.Content = Convert.ToString(schueler.Vorname);
+                        Window_Connector.schueler = schueler;
+                        MainFrame.Content = Window_Connector;
+
+                        return true;
+                    }
+                }
+
+                return false;
             }
             else
             {

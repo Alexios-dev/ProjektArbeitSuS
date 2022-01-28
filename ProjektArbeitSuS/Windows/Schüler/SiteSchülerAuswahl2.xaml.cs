@@ -20,11 +20,13 @@ namespace ProjektArbeitSuS.Windows.Schüler
     /// </summary>
     public partial class SiteSchülerAuswahl2 : Page
     {
+        public Model.Schueler Schueler;
         public MainWindow mainwindow = Application.Current.MainWindow as MainWindow;
         // Hier fügen wir ein Label hinzu um nachher in das objekt das objekt Label_Help zu importieren
         public Label Label_Help = new Label();
-        public SiteSchülerAuswahl2(Label help)
+        public SiteSchülerAuswahl2(Label help, Model.Schueler schueler)
         {
+            Schueler = schueler;
             InitializeComponent();
             Label_Help = help;
         }

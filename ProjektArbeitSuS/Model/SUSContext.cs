@@ -2,34 +2,28 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using ProjektArbeitSuS.Klassen;
-using System.Windows;
-namespace ProjektArbeitSuS.DbConnection
+
+namespace ProjektArbeitSuS.Model
 {
-    public partial class SuSContext : DbContext
+    public partial class SUSContext : DbContext
     {
-        public SuSContext()
+        public SUSContext()
         {
-            foreach(Fach a in Faches )
-            {
-                MessageBox.Show(a.Name); 
-            }
         }
 
-        public SuSContext(DbContextOptions<SuSContext> options)
+        public SUSContext(DbContextOptions<SUSContext> options)
             : base(options)
         {
         }
 
-        public virtual DbSet<DatenLehrer> DatenLehrers { get; set; } = null!;
-        public virtual DbSet<DatenSchueler> DatenSchuelers { get; set; } = null!;
+        public virtual DbSet<Daten> Datens { get; set; } = null!;
         public virtual DbSet<Fach> Faches { get; set; } = null!;
         public virtual DbSet<Fehlzeiten> Fehlzeitens { get; set; } = null!;
         public virtual DbSet<Lehrer> Lehrers { get; set; } = null!;
         public virtual DbSet<Rfidchip> Rfidchips { get; set; } = null!;
         public virtual DbSet<Rfidleser> Rfidlesers { get; set; } = null!;
         public virtual DbSet<Schueler> Schuelers { get; set; } = null!;
-        public virtual DbSet<SchuhlKlassen> SchuhlKlassens { get; set; } = null!;
+        public virtual DbSet<SchulKlassen> SchulKlassens { get; set; } = null!;
         public virtual DbSet<Stundenplan> Stundenplans { get; set; } = null!;
         public virtual DbSet<StundenplanStunden> StundenplanStundens { get; set; } = null!;
 
@@ -38,60 +32,35 @@ namespace ProjektArbeitSuS.DbConnection
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=SuS;Integrated Security=True;");
+                optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=SUS;Integrated Security=True;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<DatenLehrer>(entity =>
+            modelBuilder.Entity<Daten>(entity =>
             {
-                entity.ToTable("DatenLehrer");
+                entity.ToTable("Daten");
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.DatumVon).HasColumnType("datetime");
 
-                entity.Property(e => e.LehrerMatrikelnummer).HasColumnName("Lehrer_Matrikelnummer");
+                entity.Property(e => e.RfidchipUid).HasColumnName("RFIDChip_UID");
 
                 entity.Property(e => e.RfidleserId).HasColumnName("RFIDLeser_ID");
 
-                entity.HasOne(d => d.LehrerMatrikelnummerNavigation)
-                    .WithMany(p => p.DatenLehrers)
-                    .HasForeignKey(d => d.LehrerMatrikelnummer)
+                entity.HasOne(d => d.RfidchipU)
+                    .WithMany(p => p.Datens)
+                    .HasForeignKey(d => d.RfidchipUid)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("DatenLehrer_Lehrer");
+                    .HasConstraintName("Daten_RFIDChip");
 
                 entity.HasOne(d => d.Rfidleser)
-                    .WithMany(p => p.DatenLehrers)
-                    .HasForeignKey(d => d.RfidleserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("DatenLehrer_RFIDLeser");
-            });
-
-            modelBuilder.Entity<DatenSchueler>(entity =>
-            {
-                entity.ToTable("DatenSchueler");
-
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.DatumVon).HasColumnType("datetime");
-
-                entity.Property(e => e.RfidleserId).HasColumnName("RFIDLeser_ID");
-
-                entity.Property(e => e.SchuelerMatrikelnummer).HasColumnName("Schueler_Matrikelnummer");
-
-                entity.HasOne(d => d.Rfidleser)
-                    .WithMany(p => p.DatenSchuelers)
+                    .WithMany(p => p.Datens)
                     .HasForeignKey(d => d.RfidleserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Daten_RFIDLeser");
-
-                entity.HasOne(d => d.SchuelerMatrikelnummerNavigation)
-                    .WithMany(p => p.DatenSchuelers)
-                    .HasForeignKey(d => d.SchuelerMatrikelnummer)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("Daten_Schueler");
             });
 
             modelBuilder.Entity<Fach>(entity =>
@@ -99,6 +68,10 @@ namespace ProjektArbeitSuS.DbConnection
                 entity.ToTable("Fach");
 
                 entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Kuerzel)
+                    .HasMaxLength(3)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
@@ -139,6 +112,8 @@ namespace ProjektArbeitSuS.DbConnection
 
                 entity.ToTable("Lehrer");
 
+                entity.Property(e => e.Matrikelnummer).ValueGeneratedNever();
+
                 entity.Property(e => e.Geburtsdatum).HasColumnType("date");
 
                 entity.Property(e => e.Kuerzel)
@@ -151,8 +126,7 @@ namespace ProjektArbeitSuS.DbConnection
 
                 entity.Property(e => e.Password)
                     .HasMaxLength(255)
-                    .IsUnicode(false)
-                    .HasColumnName("password");
+                    .IsUnicode(false);
 
                 entity.Property(e => e.RfidchipUid).HasColumnName("RFIDChip_UID");
 
@@ -174,7 +148,9 @@ namespace ProjektArbeitSuS.DbConnection
 
                 entity.ToTable("RFIDChip");
 
-                entity.Property(e => e.Uid).HasColumnName("UID");
+                entity.Property(e => e.Uid)
+                    .ValueGeneratedNever()
+                    .HasColumnName("UID");
             });
 
             modelBuilder.Entity<Rfidleser>(entity =>
@@ -195,6 +171,8 @@ namespace ProjektArbeitSuS.DbConnection
 
                 entity.ToTable("Schueler");
 
+                entity.Property(e => e.Matrikelnummer).ValueGeneratedNever();
+
                 entity.Property(e => e.Geburtsdatum).HasColumnType("date");
 
                 entity.Property(e => e.Nachname)
@@ -203,12 +181,11 @@ namespace ProjektArbeitSuS.DbConnection
 
                 entity.Property(e => e.Password)
                     .HasMaxLength(255)
-                    .IsUnicode(false)
-                    .HasColumnName("password");
+                    .IsUnicode(false);
 
                 entity.Property(e => e.RfidchipUid).HasColumnName("RFIDChip_UID");
 
-                entity.Property(e => e.SchuhlKlassenId).HasColumnName("SchuhlKlassen_ID");
+                entity.Property(e => e.SchulKlassenId).HasColumnName("SchulKlassen_ID");
 
                 entity.Property(e => e.Vorname)
                     .HasMaxLength(50)
@@ -220,16 +197,16 @@ namespace ProjektArbeitSuS.DbConnection
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Schueler_RFIDChip");
 
-                entity.HasOne(d => d.SchuhlKlassen)
+                entity.HasOne(d => d.SchulKlassen)
                     .WithMany(p => p.Schuelers)
-                    .HasForeignKey(d => d.SchuhlKlassenId)
+                    .HasForeignKey(d => d.SchulKlassenId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Schueler_SchuhlKlassen");
             });
 
-            modelBuilder.Entity<SchuhlKlassen>(entity =>
+            modelBuilder.Entity<SchulKlassen>(entity =>
             {
-                entity.ToTable("SchuhlKlassen");
+                entity.ToTable("SchulKlassen");
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
@@ -240,7 +217,7 @@ namespace ProjektArbeitSuS.DbConnection
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.LehrerMatrikelnummerNavigation)
-                    .WithMany(p => p.SchuhlKlassens)
+                    .WithMany(p => p.SchulKlassens)
                     .HasForeignKey(d => d.LehrerMatrikelnummer)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Klassen_Lehrer");
@@ -252,11 +229,11 @@ namespace ProjektArbeitSuS.DbConnection
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.SchuhlKlassenId).HasColumnName("SchuhlKlassen_ID");
+                entity.Property(e => e.SchulKlassenId).HasColumnName("SchulKlassen_ID");
 
-                entity.HasOne(d => d.SchuhlKlassen)
+                entity.HasOne(d => d.SchulKlassen)
                     .WithMany(p => p.Stundenplans)
-                    .HasForeignKey(d => d.SchuhlKlassenId)
+                    .HasForeignKey(d => d.SchulKlassenId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Stundenplan_SchuhlKlassen");
             });
@@ -266,6 +243,8 @@ namespace ProjektArbeitSuS.DbConnection
                 entity.ToTable("StundenplanStunden");
 
                 entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Bemerkung).HasColumnType("text");
 
                 entity.Property(e => e.DateTimeBis).HasColumnType("datetime");
 
@@ -299,9 +278,9 @@ namespace ProjektArbeitSuS.DbConnection
 
                             j.ToTable("Lehrer_StundenplanStunden");
 
-                            j.IndexerProperty<int>("StundenplanStundenId").HasColumnName("StundenplanStunden_ID");
+                            j.IndexerProperty<long>("StundenplanStundenId").HasColumnName("StundenplanStunden_ID");
 
-                            j.IndexerProperty<int>("LehrerMatrikelnummer").HasColumnName("Lehrer_Matrikelnummer");
+                            j.IndexerProperty<long>("LehrerMatrikelnummer").HasColumnName("Lehrer_Matrikelnummer");
                         });
             });
 

@@ -9,16 +9,22 @@
       Title="SiteSchülerAuswahl3">
 
     <Grid>
-        <DataGrid x:Name="DataGrid_DataGrid" MouseMove="DataGrid_DataGrid_MouseMove" MouseLeave="DataGrid_DataGrid_MouseLeave" HorizontalAlignment="Center" ItemsSource="{Binding}" AutoGenerateColumns="False" Height="382" VerticalAlignment="Center" Width="661">
+        <DataGrid x:Name="DataGrid_DataGrid" MouseMove="DataGrid_DataGrid_MouseMove" MouseLeave="DataGrid_DataGrid_MouseLeave" HorizontalAlignment="Center" ItemsSource="{Binding}" AutoGenerateColumns="False" Height="382" VerticalAlignment="Center" Width="432">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="DataGridTextColumn_ID" Binding="{Binding ID}" Header="ID" Visibility="Hidden"/>
+                <DataGridTextColumn x:Name="DataGridTextColumn_ID" Binding="{Binding Id}" Header="ID" Visibility="Hidden"/>
                 <DataGridTextColumn x:Name="DataGridTextColumn_Raum" Binding="{Binding Raum}" Header="Raum"/>
-                <DataGridTextColumn x:Name="DataGridTextColumn_DatumVon" Binding="{Binding DatumVon}" Header="Uhrzeit Von"/>
-
-                <DataGridTextColumn x:Name="DataGridTextColumn_DatumBis" Binding="{Binding DatumBis}" Header="Uhrzeit Bis"/>
-                <DataGridTextColumn x:Name="DataGridTextColumn_Lehrer" Binding="{Binding Lehrer}" Header="Lehrer"/>
+                <DataGridTextColumn x:Name="DataGridTextColumn_DatumVon" Binding="{Binding DatumVon}" Header="Datum und Uhrzeit"/>
             </DataGrid.Columns>
         </DataGrid>
+        <ComboBox x:Name="ComboBox_Sort" SelectionChanged="ComboBox_Sort_SelectionChanged" MouseMove="ComboBox_Sort_MouseMove" MouseLeave="ComboBox_Sort_MouseLeave" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Width="100">
+            <ComboBoxItem x:Name="ComboBox_Item_Reset"      Content="Reset"/>
+            <ComboBoxItem x:Name="ComboBox_Item_Raum"       Content="Raum"/>
+            <ComboBoxItem x:Name="ComboBox_Item_DatumVon"   Content="DatumVon"/>
+            <ComboBoxItem x:Name="ComboBox_Item_DatumBis"   Content="DatumBis"/>
+            <ComboBoxItem x:Name="ComboBox_Item_Lehrer"     Content="Lehrer"/>
+        </ComboBox>
+        
+        <TextBox Visibility="Hidden" x:Name="TextBox_Sort"  MouseMove="TextBox_Sort_MouseMove"  MouseLeave="TextBox_Sort_MouseLeave" HorizontalAlignment="Left" Margin="10,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
 
     </Grid>
 </Page>

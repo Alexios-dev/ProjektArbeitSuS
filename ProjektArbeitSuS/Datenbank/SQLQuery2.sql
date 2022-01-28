@@ -1,5 +1,5 @@
 ﻿-- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2022-01-23 13:39:27.047
+-- Last modification date: 2022-01-21 23:13:17.186
 
 -- tables
 -- Table: DatenLehrer
@@ -23,7 +23,7 @@ CREATE TABLE DatenSchueler (
 -- Table: Fach
 CREATE TABLE Fach (
     ID int  NOT NULL IDENTITY(1, 1),
-    Name varchar(50)  NULL,
+    Name varchar(50)  NOT NULL,
     CONSTRAINT Fach_pk PRIMARY KEY  (ID)
 );
 
@@ -41,11 +41,11 @@ CREATE TABLE Fehlzeiten (
 -- Table: Lehrer
 CREATE TABLE Lehrer (
     Matrikelnummer int  NOT NULL,
-    Vorname varchar(50)  NULL,
-    Nachname varchar(50)  NULL,
-    Geburtsdatum date  NULL,
-    Kuerzel varchar(50)  NULL,
-    Passwordd varchar(255)  NULL,
+    Vorname varchar(50)  NOT NULL,
+    Nachname varchar(50)  NOT NULL,
+    Geburtsdatum date  NOT NULL,
+    Kuerzel varchar(50)  NOT NULL,
+    Password varchar(255)  NOT NULL,
     RFIDChip_UID int  NOT NULL,
     CONSTRAINT Lehrer_pk PRIMARY KEY  (Matrikelnummer)
 );
@@ -60,7 +60,7 @@ CREATE TABLE Lehrer_StundenplanStunden (
 -- Table: RFIDChip
 CREATE TABLE RFIDChip (
     UID int  NOT NULL,
-    Number int  NULL,
+    Number int  NOT NULL,
     CONSTRAINT RFIDChip_pk PRIMARY KEY  (UID)
 );
 
@@ -77,7 +77,7 @@ CREATE TABLE Schueler (
     Vorname varchar(50)  NULL,
     Nachname varchar(50)  NULL,
     Geburtsdatum date  NULL,
-    Passwordd varchar(255)  NULL,
+    password varchar(255)  NULL,
     RFIDChip_UID int  NOT NULL,
     SchuhlKlassen_ID int  NOT NULL,
     CONSTRAINT Schueler_pk PRIMARY KEY  (Matrikelnummer)
@@ -86,7 +86,7 @@ CREATE TABLE Schueler (
 -- Table: SchuhlKlassen
 CREATE TABLE SchuhlKlassen (
     ID int  NOT NULL IDENTITY(1, 1),
-    Name varchar(50)  NULL,
+    Name varchar(50)  NOT NULL,
     Lehrer_Matrikelnummer int  NOT NULL,
     CONSTRAINT SchuhlKlassen_pk PRIMARY KEY  (ID)
 );
@@ -101,13 +101,13 @@ CREATE TABLE Stundenplan (
 -- Table: StundenplanStunden
 CREATE TABLE StundenplanStunden (
     ID int  NOT NULL IDENTITY(1, 1),
-    DateTimeVon datetime  NULL,
-    DateTimeBis datetime  NULL,
+    DateTimeVon datetime  NOT NULL,
+    DateTimeBis datetime  NOT NULL,
     Fach_ID int  NOT NULL,
     Stundenplan_ID int  NOT NULL,
     CONSTRAINT StundenplanStunden_pk PRIMARY KEY  (ID)
 );
-
+GO
 -- foreign keys
 -- Reference: DatenLehrer_Lehrer (table: DatenLehrer)
 ALTER TABLE DatenLehrer ADD CONSTRAINT DatenLehrer_Lehrer
@@ -187,10 +187,6 @@ ALTER TABLE Stundenplan ADD CONSTRAINT Stundenplan_SchuhlKlassen
 -- End of file.
 
 
-
-
-
-
 --Fach
 INSERT INTO Fach(Name)
 Values('Deutsch');--0
@@ -255,30 +251,30 @@ VALUES ('A104');
 INSERT INTO RFIDLeser(Name)
 VALUES ('A105');
 INSERT INTO RFIDLeser(Name)
-VALUES ('A106');      
+VALUES ('A106');
 
 GO
 --Lehrer
-INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,Passwordd,RFIDChip_UID)
-VALUES (5016889977,'Steffan','Erlei',convert(date, '1990/01/02', 2),'ER','NULL',00000001);
-INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,Passwordd,RFIDChip_UID)
-VALUES (5016889978,'Mara','Jansen',convert(date,'1990/01/02', 2),'JA','NULL',00000002);
-INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,Passwordd,RFIDChip_UID)
-VALUES (5016889979,'Frank','Wächter',convert(date,'1990/01/01', 2),'WÄ','NULL',00000003);
-INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,Passwordd,RFIDChip_UID)
-VALUES (5016889981,'Boris','Hegermann',convert(date,'1990/01/03', 2),'HA','NULL',00000004);
-INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,Passwordd,RFIDChip_UID)
-VALUES (5016889982,'Ali','Bostanci',convert(date,'1990/01/01', 2),'BC','NULL',00000005);
-INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,Passwordd,RFIDChip_UID)
-VALUES (5016889983,'Andreas','Burdenski',convert(date,'1990/01/05', 2),'BD','NULL',00000006);
-INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,Passwordd,RFIDChip_UID)
-VALUES (5016889984,'Holger','Hüller',convert(date,'1990/01/06', 2),'HÜ','NULL',00000007);
-INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,Passwordd,RFIDChip_UID)
-VALUES (5016889985,'Detlef','Gotthardt',convert(date,'1990/01/04', 2),'GH','NULL',00000008);
-INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,Passwordd,RFIDChip_UID)
-VALUES (5016889986,'Stefan','Opalla',convert(date,'1990/01/05', 2),'OP','NULL',00000009);
-INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,Passwordd,RFIDChip_UID)
-VALUES (5016889987,'Dennis','Netterdon',convert(date,'1990/01/04', 2),'NT','NULL',00000010);
+INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,RFIDChip_UID)
+VALUES (5016889977,'Steffan','Erlei',convert(date, '01.01.1990', 104),'ER',00000001);
+INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,RFIDChip_UID)
+VALUES (5016889978,'Mara','Jansen',convert(date,'1990/01/02', 2),'JA',00000002);
+INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,RFIDChip_UID)
+VALUES (5016889979,'Frank','Wächter',convert(date,'1990/01/01', 2),'WÄ',00000003);
+INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,RFIDChip_UID)
+VALUES (5016889981,'Boris','Hegermann',convert(date,'1990/01/03', 2),'HA',00000004);
+INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,RFIDChip_UID)
+VALUES (5016889982,'Ali','Bostanci',convert(date,'1990/01/01', 2),'BC',00000005);
+INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,RFIDChip_UID)
+VALUES (5016889983,'Andreas','Burdenski',convert(date,'1990/01/05', 2),'BD',00000006);
+INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,RFIDChip_UID)
+VALUES (5016889984,'Holger','Hüller',convert(date,'1990/01/06', 2),'HÜ',00000007);
+INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,RFIDChip_UID)
+VALUES (5016889985,'Detlef','Gotthardt',convert(date,'1990/01/04', 2),'GH',00000008);
+INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,RFIDChip_UID)
+VALUES (5016889986,'Stefan','Opalla',convert(date,'1990/01/05', 2),'OP',00000009);
+INSERT INTO Lehrer(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Kuerzel,RFIDChip_UID)
+VALUES (5016889987,'Dennis','Netterdon',convert(date,'1990/01/04', 2),'NT',00000010);
 GO
 
 --Schuhl Klassen
@@ -376,8 +372,8 @@ Values (14,5016889987);
 
 GO
 --Schueler
-INSERT INTO Schueler(Matrikelnummer,Vorname,Nachname,Geburtsdatum,Passwordd,RFIDChip_UID,SchuhlKlassen_ID)
-Values (2219135532,'Alexander','Genenger','´2003/03/03','NULL',00000011,1);
+INSERT INTO Schueler(Matrikelnummer,Vorname,Nachname,Geburtsdatum,RFIDChip_UID,SchuhlKlassen_ID)
+Values (2219135532,'Alexander','Genenger','´2003/03/03',00000011,1);
 
 GO
 --DatenSchueler

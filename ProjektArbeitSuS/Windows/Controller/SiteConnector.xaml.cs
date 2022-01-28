@@ -20,13 +20,16 @@ namespace ProjektArbeitSuS.Windows.Controller
     /// </summary>
     public partial class SiteConnector : Page
     {
-        public int Key;
+        public Model.Schueler schueler;
+        public Model.Lehrer lehrer;
         public bool Help;
+        
         public SiteConnector()
         {
             
             InitializeComponent();
         }
+        
         /*
          * Bei den Nummern bei:
          * Convert.ToString(Key).Substring(0,1) == "3"
@@ -42,7 +45,7 @@ namespace ProjektArbeitSuS.Windows.Controller
         {
             //Standard aufbau der nächsten Methoden
 
-            if (Convert.ToString(Key).Substring(0, 1) == "1")
+            if (schueler != null)
             {
                 Label_Auswahl1.Content = "Fehlstunden Liste";
                 if (Help)
@@ -62,12 +65,14 @@ namespace ProjektArbeitSuS.Windows.Controller
         //----------------------------------------------------------------------------------------------------
         private void Button_Auswahl1_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Content = new Windows.Schüler.SiteSchülerAuswahl1(Label_Help);
-
+            if (schueler != null)
+            {
+                MainFrame.Content = new Windows.Schüler.SiteSchülerAuswahl1(Label_Help, schueler);
+            }
         }
         private void Button_Auswahl2_MouseMove(object sender, MouseEventArgs e)
         {
-            if (Convert.ToString(Key).Substring(0, 1) == "1")
+            if (schueler != null)
             {
                 Label_Auswahl2.Content = "Diagram Ansicht";
                 if (Help)
@@ -83,11 +88,14 @@ namespace ProjektArbeitSuS.Windows.Controller
         }
         private void Button_Auswahl2_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Content = new Windows.Schüler.SiteSchülerAuswahl2(Label_Help);
+            if (schueler != null)
+            {
+                MainFrame.Content = new Windows.Schüler.SiteSchülerAuswahl2(Label_Help,schueler);
+            }
         }
         private void Button_Auswahl3_MouseMove(object sender, MouseEventArgs e)
         {
-            if (Convert.ToString(Key).Substring(0, 1) == "1")
+            if (schueler != null)
             {
                 Label_Auswahl3.Content = "Anwesenheits Liste";
                 if (Help)
@@ -103,7 +111,10 @@ namespace ProjektArbeitSuS.Windows.Controller
         }
         private void Button_Auswahl3_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Content = new Windows.Schüler.SiteSchülerAuswahl3(Label_Help);
+            if (schueler != null)
+            {
+                MainFrame.Content = new Windows.Schüler.SiteSchülerAuswahl3(Label_Help, schueler);
+            }
         }
         //Hier wird Help Aktieviert / Deaktieviert und beim drücken auf den button help resetet sollte es aus irgendwelchen
         //gründen mal hängen

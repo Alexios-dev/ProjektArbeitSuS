@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ProjektArbeitSuS.Klassen
+namespace ProjektArbeitSuS.Model
 {
-    public partial class SchuhlKlassen
+    public partial class SchulKlassen
     {
-        public SchuhlKlassen()
+        public SchulKlassen()
         {
             Schuelers = new HashSet<Schueler>();
             Stundenplans = new HashSet<Stundenplan>();
         }
 
-        public int Id { get; set; }
-        public string Name { get; set; } = null!;
-        public int LehrerMatrikelnummer { get; set; }
+        public long Id { get; set; }
+        public string? Name { get; set; }
+        public long LehrerMatrikelnummer { get; set; }
 
         public virtual Lehrer LehrerMatrikelnummerNavigation { get; set; } = null!;
         public virtual ICollection<Schueler> Schuelers { get; set; }
