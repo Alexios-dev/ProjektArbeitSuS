@@ -6,30 +6,20 @@ CREATE DATABASE SuS;
 USE SuS;
 GO
 
--- tables
--- Table: DatenLehrer
-
-CREATE TABLE DatenLehrer (
-    ID bigint  NOT NULL IDENTITY(1, 1),
-    DatumVon datetime  NULL,
-    Lehrer_Matrikelnummer bigint  NOT NULL,
+--table Daten
+CREATE TABLE Daten (
+    ID bigint  NOT NULL,
+    DatumVon datetime  NOT NULL,
     RFIDLeser_ID bigint  NOT NULL,
-    CONSTRAINT DatenLehrer_pk PRIMARY KEY  (ID)
-);
-
--- Table: DatenSchueler
-CREATE TABLE DatenSchueler (
-    ID bigint  NOT NULL IDENTITY(1, 1),
-    DatumVon datetime  NULL,
-    Schueler_Matrikelnummer bigint  NOT NULL,
-    RFIDLeser_ID bigint  NOT NULL,
-    CONSTRAINT DatenSchueler_pk PRIMARY KEY  (ID)
+    RFIDChip_UID bigint  NOT NULL,
+    CONSTRAINT Daten_pk PRIMARY KEY  (ID)
 );
 
 -- Table: Fach
 CREATE TABLE Fach (
     ID bigint  NOT NULL IDENTITY(1, 1),
     Name varchar(50)  NULL,
+    Kuerzel varchar(3)  NOT NULL,
     CONSTRAINT Fach_pk PRIMARY KEY  (ID)
 );
 
@@ -38,7 +28,7 @@ CREATE TABLE Fehlzeiten (
     ID bigint  NOT NULL IDENTITY(1, 1),
     DatumVon datetime  NULL,
     DatumBis datetime  NULL,
-    Entschuldigt bigint  NOT NULL,
+    Entschuldigt int  NOT NULL,
     Lehrer_Matrikelnummer bigint  NOT NULL,
     Schueler_Matrikelnummer bigint  NOT NULL,
     CONSTRAINT Fehlzeiten_pk PRIMARY KEY  (ID)
@@ -51,7 +41,7 @@ CREATE TABLE Lehrer (
     Nachname varchar(50)  NULL,
     Geburtsdatum date  NULL,
     Kuerzel varchar(50)  NULL,
-    Passwordd varchar(255)  NULL,
+    Password varchar(255)  NULL,
     RFIDChip_UID bigint  NOT NULL,
     CONSTRAINT Lehrer_pk PRIMARY KEY  (Matrikelnummer)
 );
@@ -79,28 +69,28 @@ CREATE TABLE RFIDLeser (
 
 -- Table: Schueler
 CREATE TABLE Schueler (
-    Matrikelnummer bigint  NOT NULL,
+    Matrikelnummer bigint  NOT NULL IDENTITY(1, 1),
     Vorname varchar(50)  NULL,
     Nachname varchar(50)  NULL,
     Geburtsdatum date  NULL,
-    Passwordd varchar(255)  NULL,
+    Password varchar(255)  NULL,
     RFIDChip_UID bigint  NOT NULL,
-    SchuhlKlassen_ID bigint  NOT NULL,
+    SchulKlassen_ID bigint  NOT NULL,
     CONSTRAINT Schueler_pk PRIMARY KEY  (Matrikelnummer)
 );
 
--- Table: SchuhlKlassen
-CREATE TABLE SchuhlKlassen (
+-- Table: SchulKlassen
+CREATE TABLE SchulKlassen (
     ID bigint  NOT NULL IDENTITY(1, 1),
     Name varchar(50)  NULL,
     Lehrer_Matrikelnummer bigint  NOT NULL,
-    CONSTRAINT SchuhlKlassen_pk PRIMARY KEY  (ID)
+    CONSTRAINT SchulKlassen_pk PRIMARY KEY  (ID)
 );
 
 -- Table: Stundenplan
 CREATE TABLE Stundenplan (
     ID bigint  NOT NULL IDENTITY(1, 1),
-    SchuhlKlassen_ID bigint  NOT NULL,
+    SchulKlassen_ID bigint  NOT NULL,
     CONSTRAINT Stundenplan_pk PRIMARY KEY  (ID)
 );
 
@@ -109,31 +99,22 @@ CREATE TABLE StundenplanStunden (
     ID bigint  NOT NULL IDENTITY(1, 1),
     DateTimeVon datetime  NULL,
     DateTimeBis datetime  NULL,
+    Bemerkung text  NOT NULL,
     Fach_ID bigint  NOT NULL,
     Stundenplan_ID bigint  NOT NULL,
     CONSTRAINT StundenplanStunden_pk PRIMARY KEY  (ID)
 );
 
 -- foreign keys
--- Reference: DatenLehrer_Lehrer (table: DatenLehrer)
-ALTER TABLE DatenLehrer ADD CONSTRAINT DatenLehrer_Lehrer
-    FOREIGN KEY (Lehrer_Matrikelnummer)
-    REFERENCES Lehrer (Matrikelnummer);
+-- Reference: Daten_RFIDChip (table: Daten)
+ALTER TABLE Daten ADD CONSTRAINT Daten_RFIDChip
+    FOREIGN KEY (RFIDChip_UID)
+    REFERENCES RFIDChip (UID);
 
--- Reference: DatenLehrer_RFIDLeser (table: DatenLehrer)
-ALTER TABLE DatenLehrer ADD CONSTRAINT DatenLehrer_RFIDLeser
+-- Reference: Daten_RFIDLeser (table: Daten)
+ALTER TABLE Daten ADD CONSTRAINT Daten_RFIDLeser
     FOREIGN KEY (RFIDLeser_ID)
     REFERENCES RFIDLeser (ID);
-
--- Reference: Daten_RFIDLeser (table: DatenSchueler)
-ALTER TABLE DatenSchueler ADD CONSTRAINT Daten_RFIDLeser
-    FOREIGN KEY (RFIDLeser_ID)
-    REFERENCES RFIDLeser (ID);
-
--- Reference: Daten_Schueler (table: DatenSchueler)
-ALTER TABLE DatenSchueler ADD CONSTRAINT Daten_Schueler
-    FOREIGN KEY (Schueler_Matrikelnummer)
-    REFERENCES Schueler (Matrikelnummer);
 
 -- Reference: Fehlzeiten_Lehrer (table: Fehlzeiten)
 ALTER TABLE Fehlzeiten ADD CONSTRAINT Fehlzeiten_Lehrer
@@ -145,8 +126,8 @@ ALTER TABLE Fehlzeiten ADD CONSTRAINT Fehlzeiten_Schueler
     FOREIGN KEY (Schueler_Matrikelnummer)
     REFERENCES Schueler (Matrikelnummer);
 
--- Reference: Klassen_Lehrer (table: SchuhlKlassen)
-ALTER TABLE SchuhlKlassen ADD CONSTRAINT Klassen_Lehrer
+-- Reference: Klassen_Lehrer (table: SchulKlassen)
+ALTER TABLE SchulKlassen ADD CONSTRAINT Klassen_Lehrer
     FOREIGN KEY (Lehrer_Matrikelnummer)
     REFERENCES Lehrer (Matrikelnummer);
 
@@ -172,8 +153,8 @@ ALTER TABLE Schueler ADD CONSTRAINT Schueler_RFIDChip
 
 -- Reference: Schueler_SchuhlKlassen (table: Schueler)
 ALTER TABLE Schueler ADD CONSTRAINT Schueler_SchuhlKlassen
-    FOREIGN KEY (SchuhlKlassen_ID)
-    REFERENCES SchuhlKlassen (ID);
+    FOREIGN KEY (SchulKlassen_ID)
+    REFERENCES SchulKlassen (ID);
 
 -- Reference: StundenplanStunden_Fach (table: StundenplanStunden)
 ALTER TABLE StundenplanStunden ADD CONSTRAINT StundenplanStunden_Fach
@@ -187,10 +168,9 @@ ALTER TABLE StundenplanStunden ADD CONSTRAINT StundenplanStunden_Stundenplan
 
 -- Reference: Stundenplan_SchuhlKlassen (table: Stundenplan)
 ALTER TABLE Stundenplan ADD CONSTRAINT Stundenplan_SchuhlKlassen
-    FOREIGN KEY (SchuhlKlassen_ID)
-    REFERENCES SchuhlKlassen (ID);
+    FOREIGN KEY (SchulKlassen_ID)
+    REFERENCES SchulKlassen (ID);
 
--- End of file.
 
 
 GO
