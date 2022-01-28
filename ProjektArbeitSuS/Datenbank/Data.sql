@@ -1,4 +1,5 @@
 ﻿-- Created by Vertabelo (http://vertabelo.com)
+-- Created by User Alexios-dev
 -- Last modification date: 2022-01-23 13:39:27.047
 drop DATABASE if EXISTS SuS;
 CREATE DATABASE SuS;
