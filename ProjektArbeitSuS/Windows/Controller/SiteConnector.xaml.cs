@@ -53,6 +53,14 @@ namespace ProjektArbeitSuS.Windows.Controller
                     Label_Help.Content = "Hier werden alle \nFehlstunden \ngebündelt \nin einer Liste\n angezeigt.";
                 }
             }
+            else if(lehrer != null)
+            {
+                Label_Auswahl1.Content = "Fach Fehlstunden";
+                if (Help)
+                {
+                    Label_Help.Content = "Hier werden\ndie Fehlstunden\nin den Fächern\nangezeigt\n";
+                }
+            }
         }
         //----------------------------------------------------------------------------------------------------
         //Hier werden die daten wenn der Mauszeiger den button verlässt wieder gelöscht
@@ -68,6 +76,10 @@ namespace ProjektArbeitSuS.Windows.Controller
             if (schueler != null)
             {
                 MainFrame.Content = new Windows.Schüler.SiteSchülerAuswahl1(Label_Help, schueler);
+            }
+            if (lehrer != null)
+            {
+                MainFrame.Content = new Windows.FachLehrer.SiteFachLehrerAuswahl1(Label_Help, lehrer);
             }
         }
         private void Button_Auswahl2_MouseMove(object sender, MouseEventArgs e)

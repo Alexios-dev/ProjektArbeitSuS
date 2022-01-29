@@ -8,24 +8,32 @@ namespace ProjektArbeitSuS.Model
 {
     internal class DatenSchueler
     {
+        SUSContext DBConnection = new SUSContext();
         public long Id { get; set; }
         public string DatumVon { get; set; }
         public string Raum { get; set; }
 
         public DatenSchueler(Daten daten)
         {
-            
-            Id = daten.Id;
-            DatumVon = Convert.ToString(daten.DatumVon);
-            if (daten.Rfidleser != null)
+            try
             {
-                Raum = daten.Rfidleser.Name;
+                Id = daten.Id;
+                DatumVon = Convert.ToString(daten.DatumVon);
+                foreach (var item in DBConnection.Rfidlesers)
+                {
+                    if (item.Id == daten.RfidleserId)
+                    {
+                        Raum = item.Name;
+                        break;
+                    }
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Raum = " ";
+                MessageBox.Show("Ein Datensatz mit der ID " + Convert.ToString(Id) + "ist fehlerhaft bitte kontaktiere den Admin");
             }
-            
+
+
 
         }
     }

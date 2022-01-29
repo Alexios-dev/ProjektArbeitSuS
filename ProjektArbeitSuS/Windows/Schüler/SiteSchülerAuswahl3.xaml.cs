@@ -20,47 +20,33 @@ namespace ProjektArbeitSuS.Windows.Schüler
     /// </summary>
     public partial class SiteSchülerAuswahl3 : Page
     {
+        
         public Model.Schueler Schueler;
         public MainWindow mainwindow = Application.Current.MainWindow as MainWindow;
-        Model.SUSContext DBConnection = new Model.SUSContext(); 
+        private Model.Verwaltung.datenSchuelersverwaltung DatenSchuelersverwaltung = new Model.Verwaltung.datenSchuelersverwaltung();
         // Hier fügen wir ein Label hinzu um nachher in das objekt das objekt Label_Help zu importieren
         public Label Label_Help = new Label();
 
-        public bool Refresh()
+        public void Refresh()
         {
 
+            
             DataGrid_DataGrid.Items.Clear();
-            try
+            foreach (var item in DatenSchuelersverwaltung.ListdatenSchuelers)
             {
-
-                foreach(var a in DBConnection.Datens)
-                {
-                    if(a.RfidchipUid == Schueler.RfidchipUid)
-                    {
-                        DataGrid_DataGrid.Items.Add(new Model.DatenSchueler(a));
-                    }
-                    
-
-                }
-                DataGrid_DataGrid.Items.Refresh();
+                DataGrid_DataGrid.Items.Add(item);
             }
-            catch
-            {
-                MessageBox.Show("Failed get Infos");
-                DataGrid_DataGrid.Items.Refresh();
-                return false;
-            }
-
             DataGrid_DataGrid.Items.Refresh();
-            return true;
-
 
         }
+        
         public SiteSchülerAuswahl3(Label help, Model.Schueler schueler)
         {
+            
             Schueler = schueler;
             Label_Help = help;
             InitializeComponent();
+            DatenSchuelersverwaltung.Init(Schueler);
             Refresh();
         }
 
@@ -101,6 +87,7 @@ namespace ProjektArbeitSuS.Windows.Schüler
             {
                 
                 ComboBox_Sort.SelectedItem = null;
+                TextBox_Sort.Text = "";
                 TextBox_Sort.Visibility = Visibility.Hidden;
 
             }
@@ -115,6 +102,28 @@ namespace ProjektArbeitSuS.Windows.Schüler
                 TextBox_Sort.Visibility = Visibility.Visible;
             }
             
+        }
+
+        private void TextBox_Sort_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(TextBox_Sort.Text == "")
+            {
+                DatenSchuelersverwaltung.Init(Schueler);
+                Refresh();
+            }
+            else if(ComboBox_Sort.SelectedItem == ComboBox_Item_Raum)
+            {
+                DatenSchuelersverwaltung.Init(Schueler);
+                DatenSchuelersverwaltung.RaumList(TextBox_Sort.Text);
+                Refresh();
+            }
+            else if (ComboBox_Sort.SelectedItem == ComboBox_Item_DatumVon)
+            {
+                DatenSchuelersverwaltung.Init(Schueler);
+                DatenSchuelersverwaltung.DatumVonList(TextBox_Sort.Text);
+                Refresh();
+            }
+
         }
     }
 }
