@@ -404,3 +404,9 @@ GO
 INSERT INTO Daten(DatumVon,RFIDChip_UID,RFIDLeser_ID)
 Values (CONVERT(DATETIME, '2022/01/17 08:30:00',120),00000004,2);
 GO
+
+--Fehlzeiten
+INSERT INTO Fehlzeiten(DatumVon,DatumBis,Entschuldigt,Lehrer_Matrikelnummer,Schueler_Matrikelnummer,StundenplanStunden_ID)
+Values (CONVERT(DATETIME, '2022/01/17 08:46:20',120),CONVERT(DATETIME, '2022/01/17 08:50:50',120),0,5016889981,2219135532,1);
+
+GO
