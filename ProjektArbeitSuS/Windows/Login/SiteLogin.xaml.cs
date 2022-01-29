@@ -71,6 +71,11 @@ namespace ProjektArbeitSuS.Windows.Login
                             TextBox_Key.Text = "2219135532";
                             return;
                         }
+                        else if(TextBox_Key.Text == "LPL")
+                        {
+                            TextBox_Key.Text = "5016889981";
+                            return;
+                        }
                         Label_Error.Content = "Nur Zahlen";
                     }
                     return;

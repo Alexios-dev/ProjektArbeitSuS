@@ -9,21 +9,23 @@
       Title="SiteFachLehrerAuswahl1">
 
     <Grid>
-        <DataGrid x:Name="DataGrid_DataGrid" MouseMove="DataGrid_DataGrid_MouseMove" MouseLeave="DataGrid_DataGrid_MouseLeave" HorizontalAlignment="Center" ItemsSource="{Binding}" AutoGenerateColumns="False" Height="382" VerticalAlignment="Center" Width="432">
+        <DataGrid x:Name="DataGrid_DataGrid" MouseMove="DataGrid_DataGrid_MouseMove" MouseLeave="DataGrid_DataGrid_MouseLeave" HorizontalAlignment="Left" ItemsSource="{Binding}" AutoGenerateColumns="False" Height="382" VerticalAlignment="Center" Width="540" Margin="120,0,0,0">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="DataGridTextColumn_ID" Binding="{Binding Id}" Header="ID" Visibility="Hidden"/>
-                <DataGridTextColumn x:Name="DataGridTextColumn_Fach" Binding="{Binding Fach}" Header="Fach"/>
-                <DataGridTextColumn x:Name="DataGridTextColumn_Schüler" Binding="{Binding Schueler}" Header="Schüler"/>
-                <DataGridTextColumn x:Name="DataGridTextColumn_DatumVon" Binding="{Binding DatumVon}" Header="DatumVon"/>
-                <DataGridTextColumn x:Name="DataGridTextColumn_DatumBis" Binding="{Binding DatumBis}" Header="DatumBis"/>
+                <DataGridTextColumn x:Name="DataGridTextColumn_Entschuldigt" Binding="{Binding Entschuldigt}" Header="Entschuldigt"/>
+                <DataGridTextColumn x:Name="DataGridTextColumn_Fach" Binding="{Binding FachName}" Header="Fach"/>
+                <DataGridTextColumn x:Name="DataGridTextColumn_Klasse" Binding="{Binding Klasse}" Header="Klasse"/>
+                <DataGridTextColumn x:Name="DataGridTextColumn_Schüler" Binding="{Binding SchuelerVorname}" Header="Schüler"/>
+                <DataGridTextColumn x:Name="DataGridTextColumn_DatumVon" Binding="{Binding DatumVon}" Header="DatumVon" FontSize="9"/>
+                <DataGridTextColumn x:Name="DataGridTextColumn_DatumBis" Binding="{Binding DatumBis}" Header="DatumBis" FontSize="9"/>
             </DataGrid.Columns>
         </DataGrid>
         <ComboBox x:Name="ComboBox_Sort" SelectionChanged="ComboBox_Sort_SelectionChanged" MouseMove="ComboBox_Sort_MouseMove" MouseLeave="ComboBox_Sort_MouseLeave" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Width="100">
             <ComboBoxItem x:Name="ComboBox_Item_Reset"      Content="Reset"/>
-            <ComboBoxItem x:Name="ComboBox_Item_Schueler"       Content="Schüler"/>
             <ComboBoxItem x:Name="ComboBox_Item_Fach"       Content="Fach"/>
-            <ComboBoxItem x:Name="ComboBox_Item_DatumVon"   Content="DatumVon"/>
-            <ComboBoxItem x:Name="ComboBox_Item_DatumBis"   Content="DatumBis"/>
+            <ComboBoxItem x:Name="ComboBox_Item_Klasse"       Content="Klasse"/>
+            <ComboBoxItem x:Name="ComboBox_Item_Schueler"       Content="Schüler"/>
+            <ComboBoxItem x:Name="ComboBox_Item_Datum"   Content="Datum"/>
         </ComboBox>
 
         <TextBox Visibility="Hidden" x:Name="TextBox_Sort"  MouseMove="TextBox_Sort_MouseMove"  MouseLeave="TextBox_Sort_MouseLeave" TextChanged="TextBox_Sort_TextChanged" HorizontalAlignment="Left" Margin="10,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>

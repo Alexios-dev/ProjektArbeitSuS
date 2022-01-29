@@ -22,7 +22,7 @@ namespace ProjektArbeitSuS
     public partial class MainWindow : Window
     {
 
-        // scaffold-dbcontext "Data Source=localhost;Initial Catalog=SuS;Integrated Security=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir "Klassen" -ContextDir "DbConnection"
+        // scaffold-dbcontext "Data Source=localhost;Initial Catalog=SUS;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir "Model" -ContextDir "Model" -Force
         public Model.Schueler schueler;
         public Model.Lehrer lehrer;
         public Windows.Login.SiteLogin Window_Login = new Windows.Login.SiteLogin();

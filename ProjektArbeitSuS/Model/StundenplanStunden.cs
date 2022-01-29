@@ -7,6 +7,7 @@ namespace ProjektArbeitSuS.Model
     {
         public StundenplanStunden()
         {
+            Fehlzeitens = new HashSet<Fehlzeiten>();
             LehrerMatrikelnummers = new HashSet<Lehrer>();
         }
 
@@ -19,6 +20,7 @@ namespace ProjektArbeitSuS.Model
 
         public virtual Fach Fach { get; set; } = null!;
         public virtual Stundenplan Stundenplan { get; set; } = null!;
+        public virtual ICollection<Fehlzeiten> Fehlzeitens { get; set; }
 
         public virtual ICollection<Lehrer> LehrerMatrikelnummers { get; set; }
     }
