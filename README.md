@@ -1,2 +1,2 @@
 # ProjektArbeitSuS
-Hier bearbeite ich meine Schulaufgabe zur anwesenheitserfassung von Schülern
+Hier bearbeiten wir unsere Schulaufgabe zur anwesenheitserfassung von Schülern
